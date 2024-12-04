@@ -259,7 +259,7 @@ SOURCES := \
 	../pascal/src/clapack/f2c/z_sqrt.c \
 	main.c
 
-CFLAGS = -I../pascal/include/
+CFLAGS = -I../pascal/include/ -I../pascal/include/clapack/
 LDFLAGS	=
 LIBS	=
 
