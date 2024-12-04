@@ -1,0 +1,3 @@
+[submodule "pascal"]
+	path = pascal
+	url = https://github.com/physical-computation/pascal.git
