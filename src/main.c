@@ -32,7 +32,7 @@ Tensor kernel(Tensor data, double l, double sigma_f) {
     }
   }
 
-  Tensor k = tensor_new_no_malloc(_values, _shape, 2);
+  Tensor k = pascal_tensor_new_no_malloc(_values, _shape, 2);
 
   return k;
 }
@@ -51,7 +51,7 @@ Tensor kernel_general(Tensor x1, Tensor x2, double l, double sigma_f) {
     }
   }
 
-  Tensor k = tensor_new_no_malloc(_values, _shape, 2);
+  Tensor k = pascal_tensor_new_no_malloc(_values, _shape, 2);
   return k;
 }
 
@@ -59,13 +59,13 @@ Tensor mean_pred(Tensor x_new, Tensor x, Tensor y, Tensor data_kern, double l,
                  double sigma_f, double noise) {
   Tensor k_new = kernel_general(x_new, x, l, sigma_f);
 
-  // Tensor t_noise   = tensor_eye(k->shape[0]);
-  // Tensor k_noise   = tensor_add(k, tensor_scalar_multiply(t_noise, noise));
-  // Tensor data_kern = tensor_linalg_solve(k_noise, y);
+  // Tensor t_noise   = pascal_tensor_eye(k->shape[0]);
+  // Tensor k_noise   = pascal_tensor_add(k, pascal_tensor_scalar_multiply(t_noise, noise));
+  // Tensor data_kern = pascal_tensor_linalg_solve(k_noise, y);
 
-  Tensor rv = tensor_matmul(k_new, data_kern);
+  Tensor rv = pascal_tensor_matmul(k_new, data_kern);
 
-  tensor_free(k_new);
+  pascal_tensor_free(k_new);
 
   return rv;
 }
@@ -73,24 +73,24 @@ Tensor mean_pred(Tensor x_new, Tensor x, Tensor y, Tensor data_kern, double l,
 Tensor variance_pred(Tensor x_new, Tensor x, Tensor y, Tensor k_noise, double l,
                      double sigma_f, double noise) {
   Tensor k_new_left = kernel_general(x_new, x, l, sigma_f);
-  Tensor k_new_right = tensor_transpose(k_new_left, (index_t[]){1, 0});
+  Tensor k_new_right = pascal_tensor_transpose(k_new_left, (index_t[]){1, 0});
 
   Tensor k_new = kernel(x_new, l, sigma_f);
 
-  // Tensor t_noise       = tensor_eye(k->shape[0]);
-  // Tensor k_noise       = tensor_add(k, tensor_scalar_multiply(t_noise,
+  // Tensor t_noise       = pascal_tensor_eye(k->shape[0]);
+  // Tensor k_noise       = pascal_tensor_add(k, pascal_tensor_scalar_multiply(t_noise,
   // noise));
-  Tensor data_kern = tensor_linalg_solve(k_noise, k_new_right);
+  Tensor data_kern = pascal_tensor_linalg_solve(k_noise, k_new_right);
 
-  Tensor right_summand = tensor_matmul(k_new_left, data_kern);
-  Tensor full_mat = tensor_subtract(k_new, right_summand);
-  Tensor rv = tensor_diag(full_mat);
+  Tensor right_summand = pascal_tensor_matmul(k_new_left, data_kern);
+  Tensor full_mat = pascal_tensor_subtract(k_new, right_summand);
+  Tensor rv = pascal_tensor_diag(full_mat);
 
-  tensor_free(k_new_left);
-  tensor_free(k_new_right);
-  tensor_free(data_kern);
-  tensor_free(right_summand);
-  tensor_free(k_new);
+  pascal_tensor_free(k_new_left);
+  pascal_tensor_free(k_new_right);
+  pascal_tensor_free(data_kern);
+  pascal_tensor_free(right_summand);
+  pascal_tensor_free(k_new);
 
   return rv;
 }
@@ -107,29 +107,29 @@ int main() {
   double noise = 0.01;
 
   Tensor x =
-      tensor_new((double[]){-9.42477796, -7.33038286, -5.23598776, -3.14159265,
+      pascal_tensor_new((double[]){-9.42477796, -7.33038286, -5.23598776, -3.14159265,
                             -1.04719755, 1.04719755, 3.14159265, 5.23598776,
                             7.33038286, 9.42477796},
                  (index_t[]){10, 1}, 2);
-  Tensor y = tensor_new(
+  Tensor y = pascal_tensor_new(
       (double[]){0.15707481, -2.0195747, 1.59070617, 0.48162433, -0.9591348,
                  0.81104839, 0.49939094, -1.1432049, 1.82739085, 0.17157255},
       (index_t[]){10, 1}, 2);
 
   Tensor k = kernel(x, l, sigma_f);
-  Tensor t_noise = tensor_eye(k->shape[0]);
+  Tensor t_noise = pascal_tensor_eye(k->shape[0]);
   Tensor k_noise =
-      tensor_add(k, tensor_scalar_multiply(t_noise, pow(noise, 2)));
-  Tensor data_kern = tensor_linalg_solve(k_noise, y);
+      pascal_tensor_add(k, pascal_tensor_scalar_multiply(t_noise, pow(noise, 2)));
+  Tensor data_kern = pascal_tensor_linalg_solve(k_noise, y);
 
   Tensor x_new =
-      tensor_new((double[]){UxHwDoubleGaussDist(0, 2.0)}, (index_t[]){1, 1}, 1);
+      pascal_tensor_new((double[]){UxHwDoubleGaussDist(0, 2.0)}, (index_t[]){1, 1}, 1);
 
   Tensor means = mean_pred(x_new, x, y, data_kern, l, sigma_f, noise);
   Tensor variances = variance_pred(x_new, x, y, k_noise, l, sigma_f, noise);
 
-  double mean = tensor_get(means, (index_t[]){0, 0});
-  double variance = tensor_get(variances, (index_t[]){0, 0});
+  double mean = pascal_tensor_get(means, (index_t[]){0, 0});
+  double variance = pascal_tensor_get(variances, (index_t[]){0, 0});
   double std_mean = sqrt(variance);
 
   double z = UxHwDoubleGaussDist(0, 1.0);
@@ -144,10 +144,10 @@ int main() {
 
   printf("%lf %llu\0", prediction, delta_us);
 
-  tensor_free(x);
-  tensor_free(y);
-  tensor_free(k);
-  tensor_free(x_new);
-  tensor_free(means);
-  tensor_free(variances);
+  pascal_tensor_free(x);
+  pascal_tensor_free(y);
+  pascal_tensor_free(k);
+  pascal_tensor_free(x_new);
+  pascal_tensor_free(means);
+  pascal_tensor_free(variances);
 }
