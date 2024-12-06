@@ -78,6 +78,7 @@ run-bm: Makefile $(BUILD_DIR)/$(ENTRYPOINT)
 	rm data.out
 
 else ifeq ($(PLATFORM), linux)
+run-bm: Makefile $(BUILD_DIR)/$(ENTRYPOINT)
 	mkdir -p $(DATA_DIR)
 	mkdir -p $(ROOT_DIR)/$(EXPERIMENT_RESULTS_DIR)
 
