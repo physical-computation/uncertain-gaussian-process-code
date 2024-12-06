@@ -1,2 +1,9 @@
-**DS_Store
-.vscode**
+**DS_Store**
+**.vscode**
+**.mypy_cache**
+
+build/**
+libs/**
+data/**
+experiment-results/**
+data.out
