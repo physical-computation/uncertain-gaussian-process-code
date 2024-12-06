@@ -34,7 +34,10 @@ endif
 
 .PHONY: \
 	run \
+	run-bm \
 	clean
+
+default: run
 
 $(LIBS_DIR)/libpascal.a:
 	mkdir -p $(LIBS_DIR)
