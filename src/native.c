@@ -2,6 +2,7 @@
 #include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
 #include <string.h>
 #include <sys/time.h>
 #include <time.h>
@@ -59,10 +60,6 @@ Tensor kernel_general(Tensor x1, Tensor x2, double l, double sigma_f) {
 Tensor mean_pred(Tensor x_new, Tensor x, Tensor y, Tensor data_kern, double l, double sigma_f, double noise) {
 	Tensor k_new = kernel_general(x_new, x, l, sigma_f);
 
-	// Tensor t_noise   = pascal_tensor_eye(k->shape[0]);
-	// Tensor k_noise   = pascal_tensor_add(k, pascal_tensor_scalar_multiply(t_noise, noise));
-	// Tensor data_kern = pascal_tensor_linalg_solve(k_noise, y);
-
 	Tensor rv    = pascal_tensor_matmul(k_new, data_kern);
 
 	pascal_tensor_free(k_new);
@@ -76,8 +73,6 @@ Tensor variance_pred(Tensor x_new, Tensor x, Tensor y, Tensor k_noise, double l,
 
 	Tensor k_new         = kernel(x_new, l, sigma_f);
 
-	// Tensor t_noise       = pascal_tensor_eye(k->shape[0]);
-	// Tensor k_noise       = pascal_tensor_add(k, pascal_tensor_scalar_multiply(t_noise, noise));
 	Tensor data_kern     = pascal_tensor_linalg_solve(k_noise, k_new_right);
 
 	Tensor right_summand = pascal_tensor_matmul(k_new_left, data_kern);

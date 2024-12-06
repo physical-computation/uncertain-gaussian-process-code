@@ -25,6 +25,7 @@ LDFLAGS+=-L/opt/homebrew/lib -lgsl -lgslcblas
 
 else ifeq ($(PLATFORM), linux)
 CC=gcc
+PYTHON=python3
 LDFLAGS+=-lgsl -lm
 
 else
@@ -41,13 +42,13 @@ $(LIBS_DIR)/libpascal.a:
 	cp pascal/$(LIBS_DIR)/libpascal.a $(LIBS_DIR)/
 
 
-$(BUILD_DIR)/$(ENTRYPOINT): $(LIBS_DIR)/libpascal.a $(SRC_DIR)/$(ENTRYPOINT).c
+$(BUILD_DIR)/$(ENTRYPOINT): Makefile $(LIBS_DIR)/libpascal.a $(SRC_DIR)/$(ENTRYPOINT).c
 	mkdir -p $(BUILD_DIR)
 	$(CC) -o $(BUILD_DIR)/$(ENTRYPOINT) $(SRC_DIR)/$(ENTRYPOINT).c $(INCLUDE_FLAGS) $(LDFLAGS)
 
 N_SAMPLES_SINGLE_RUN=10
 
-run: $(BUILD_DIR)/$(ENTRYPOINT)
+run: Makefile $(BUILD_DIR)/$(ENTRYPOINT)
 	./$(BUILD_DIR)/$(ENTRYPOINT) $(N_SAMPLES_SINGLE_RUN)
 
 SLEEP_FOR=0
@@ -61,7 +62,8 @@ EXPERIMENT_RESULTS_LOCATION=$(ROOT_DIR)/$(EXPERIMENT_RESULTS_DIR)/results.log
 
 PROBLEM_NAME=gp
 
-run-bm: $(BUILD_DIR)/$(ENTRYPOINT)
+ifeq ($(PLATFORM), darwin)
+run-bm: Makefile $(BUILD_DIR)/$(ENTRYPOINT)
 	mkdir -p $(DATA_DIR)
 	mkdir -p $(ROOT_DIR)/$(EXPERIMENT_RESULTS_DIR)
 
@@ -73,6 +75,25 @@ run-bm: $(BUILD_DIR)/$(ENTRYPOINT)
 		sleep $(SLEEP_FOR); \
 		done \
 	done
+	rm data.out
+
+else ifeq ($(PLATFORM), linux)
+	mkdir -p $(DATA_DIR)
+	mkdir -p $(ROOT_DIR)/$(EXPERIMENT_RESULTS_DIR)
+
+	@for iterations in $(N_SAMPLES) ; do \
+	number=1 ; while [ $$number -le $(N) ] ; do \
+		./$(BUILD_DIR)/$(ENTRYPOINT) $$iterations; \
+		$(PYTHON) $(PYTHON_SRC_DIR)/main.py $(PROBLEM_NAME) $$iterations $$number $(DATA_DIR) $(EXPERIMENT_RESULTS_LOCATION); \
+		number=`expr $$number + 1`; \
+		sleep $(SLEEP_FOR); \
+		done \
+	done
+	rm data.out
+
+else
+$(error ERROR: PLATFORM $(PLATFORM) not supported. Should be `darwin` or `linux`)
+endif
 
 clean:
 	rm -rf $(BUILD_DIR)
