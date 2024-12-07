@@ -1,5 +1,0 @@
-MinimumCore:
-  Microarchitecture: Jupiter
-  CorrelationTracking: Disable
-  MemorySize: 2000000
-  Precision: 128

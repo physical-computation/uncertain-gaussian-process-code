@@ -15,7 +15,6 @@ The Pareto plot below shows the [paper's](https://openreview.net/forum?id=zKt7uV
 </p>
 
 
-
 This repository contains the code for the implementation that was run on the [Signaloid](https://signaloid.io) platform in [`src/main.c`](src/main.c) and the implementation of the Monte Carlo experiments in [`src/native.c`](src/native.c). See [the Section below](#run-on-signaloid) to see how to run each case.
 
 For the best overall configuration of the [Signaloid](https://signaloid.io) uncertainty-tracking microprocessor (representation size of 128), we find that the closest-in-terms-of-accuracy Monte Carlo simulation (128000 Monte Carlo iterations) takes approximately 108.80x longer.
@@ -32,6 +31,8 @@ The output of this code should have the following format:
 ```
 <output distribution> <run time in microseconds>
 ```
+
+Larger experimental suites, such as running repeated experiments using multiple different representation sizes can be done via the [Signaloid Cloud Compute Engine API](https://docs.signaloid.io/docs/api/). Additional tools and instructions on how to do so for this repository will be added in the future.
 
 ### Run on Traditional Hardware
 > [!NOTE]
