@@ -1,30 +1,29 @@
 [<img src="https://assets.signaloid.io/add-to-signaloid-cloud-logo-dark-latest.png#gh-dark-mode-only" alt="[Add to signaloid.io]" height="30">](https://signaloid.io/repositories?connect=https://github.com/physical-computation/uncertain-gaussian-process-code#gh-dark-mode-only)
-[<img src="https://assets.signaloid.io/add-to-signaloid-cloud-logo-light-latest.png#gh-light-mode-only" alt="[Add to signaloid.io]" height="30">](https://signaloid.io/repositories?connect=https://github.com/jphysical-computation/uncertain-gaussian-process-code#gh-light-mode-only)
+[<img src="https://assets.signaloid.io/add-to-signaloid-cloud-logo-light-latest.png#gh-light-mode-only" alt="[Add to signaloid.io]" height="30">](https://signaloid.io/repositories?connect=https://github.com/physical-computation/uncertain-gaussian-process-code#gh-light-mode-only)
 
 # Gaussian Process Predictions with Uncertain Inputs Enabled by Uncertainty-Tracking Microprocessors
 This repository contains the code for the [Gaussian Process Predictions with Uncertain Inputs Enabled by Uncertainty-Tracking Microprocessors](https://openreview.net/forum?id=zKt7uVOttG) that was presented at the
 [Machine Learning with New Compute Paradigms](https://neurips.cc/virtual/2024/workshop/84700) workshop at NeurIPS 2024.
 
-The key contribution of the paper is a simple algorithm that can compute the Gaussian Process predictive posterior distribution with an uncertain input on an uncertainty-tracking microprocessor[^1][^2]. We run our algorithm on an commercial implementation of the uncertainty-tracking microprocessor presented by Tsoutsouras _et al._[^1][^2] provided by [Signaloid](signaloid.io).
+The key contribution of the paper is a simple algorithm that can compute the Gaussian Process predictive posterior distribution with an uncertain input on an uncertainty-tracking microprocessor[^1][^2]. We run our algorithm on an commercial implementation of the uncertainty-tracking microprocessor presented by Tsoutsouras _et al._[^1][^2] provided by [Signaloid](https://signaloid.io).
 
 We compare our algorithm to Monte Carlo simulations. We vary the number of Monte Carlo iterations that are carried and the size of the representation of the uncertainty-tracking microprocessor to measure the trade-off between the run time and the accuracy (as measured by the Wasserstein distance [^3] to the ground-truth output distribution).
 
-The Pareto plot below shows the [paper's](https://openreview.net/forum?id=zKt7uVOttG) key results comparing the mean run time against the mean Wasserstein distance (±1 std. dev.). Algorithm 1 refers to our method implemented on the uncertainty-tracking microprocessor as implemented on [Signaloid](signaloid.io) and MC stands for Monte Carlo simulation implemented on a traditional computer. The final numbers in each entry in the legend is the representation size or the number of Monte Carlo iterations. See [Section 5 of the paper](https://openreview.net/forum?id=zKt7uVOttG) for more details on the method. We see that our method is almost always on the Pareto frontier.
+The Pareto plot below shows the [paper's](https://openreview.net/forum?id=zKt7uVOttG) key results comparing the mean run time against the mean Wasserstein distance (±1 std. dev.). Algorithm 1 refers to our method implemented on the uncertainty-tracking microprocessor as implemented on [Signaloid](https://signaloid.io) and MC stands for Monte Carlo simulation implemented on a traditional computer. The final numbers in each entry in the legend is the representation size or the number of Monte Carlo iterations. See [Section 5 of the paper](https://openreview.net/forum?id=zKt7uVOttG) for more details on the method. We see that our method is almost always on the Pareto frontier.
 <p align="center">
   <img width="600" alt="image" src="https://github.com/user-attachments/assets/5c8840c2-8d3f-4b55-be6c-74a148555196">
 </p>
 
 
+This repository contains the code for the implementation that was run on the [Signaloid](https://signaloid.io) platform in [`src/main.c`](src/main.c) and the implementation of the Monte Carlo experiments in [`src/native.c`](src/native.c). See [the Section below](#run-on-signaloid) to see how to run each case.
 
-This repository contains the code for the implementation that was run on the [Signaloid](signaloid.io) platform in [`src/main.c`](src/main.c) and the implementation of the Monte Carlo experiments in [`src/native.c`](src/native.c). See [the Section below](#run-on-signaloid) to see how to run each case.
-
-For the best overall configuration of the [Signaloid](signaloid.io) uncertainty-tracking microprocessor (representation size of 128), we find that the closest-in-terms-of-accuracy Monte Carlo simulation (128000 Monte Carlo iterations) takes approximately 108.80x longer.
+For the best overall configuration of the [Signaloid](https://signaloid.io) uncertainty-tracking microprocessor (representation size of 128), we find that the closest-in-terms-of-accuracy Monte Carlo simulation (128000 Monte Carlo iterations) takes approximately 108.80x longer.
 
 ## Run the code
-This repository contains the implementation that makes use of the uncertainty-tracking microprocessor provided by [Signaloid](signaloid.io) and the implementation of the Monte Carlo simulation that runs on traditional hardware.
+This repository contains the implementation that makes use of the uncertainty-tracking microprocessor provided by [Signaloid](https://signaloid.io) and the implementation of the Monte Carlo simulation that runs on traditional hardware.
 
 ### Run on Signaloid
-To run the implementation that makes use of the uncertainty-tracking microprocessor provided by [Signaloid](signaloid.io), please click the `Add to Signaloid` button on the top of this README.
+To run the implementation that makes use of the uncertainty-tracking microprocessor provided by [Signaloid](https://signaloid.io), please click the `Add to Signaloid` button on the top of this README.
 
 This should load this repository onto your Signaloid account. You can then run the code by clicking on the `Compile and Run` button.
 
@@ -32,6 +31,8 @@ The output of this code should have the following format:
 ```
 <output distribution> <run time in microseconds>
 ```
+
+Larger experimental suites, such as running repeated experiments using multiple different representation sizes can be done via the [Signaloid Cloud Compute Engine API](https://docs.signaloid.io/docs/api/). Additional tools and instructions on how to do so for this repository will be added in the future.
 
 ### Run on Traditional Hardware
 > [!NOTE]
