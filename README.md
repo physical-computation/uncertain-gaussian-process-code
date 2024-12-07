@@ -51,7 +51,7 @@ make run
 
 This command will run a single Monte Carlo simulation with 10 iterations. The resulting data can be found in `data.out` which should look like:
 ```
-799				<- run time in microseconds
+799	        <- run time in microseconds
 -0.761006       <- samples from Monte Carlo simulation (and below)
 -0.840678
 -1.034207
