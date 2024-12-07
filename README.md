@@ -1,5 +1,5 @@
-[<img src="https://assets.signaloid.io/add-to-signaloid-cloud-logo-dark-v6.png#gh-dark-mode-only" alt="[Add to signaloid.io]" height="30">](https://signaloid.io/repositories?connect=https://github.com/physical-computation/uncertain-gaussian-process-code#gh-dark-mode-only)
-[<img src="https://assets.signaloid.io/add-to-signaloid-cloud-logo-light-v6.png#gh-light-mode-only" alt="[Add to signaloid.io]" height="30">](https://signaloid.io/repositories?connect=https://github.com/jphysical-computation/uncertain-gaussian-process-code#gh-light-mode-only)
+[<img src="https://assets.signaloid.io/add-to-signaloid-cloud-logo-dark-latest.png#gh-dark-mode-only" alt="[Add to signaloid.io]" height="30">](https://signaloid.io/repositories?connect=https://github.com/physical-computation/uncertain-gaussian-process-code#gh-dark-mode-only)
+[<img src="https://assets.signaloid.io/add-to-signaloid-cloud-logo-light-latest.png#gh-light-mode-only" alt="[Add to signaloid.io]" height="30">](https://signaloid.io/repositories?connect=https://github.com/jphysical-computation/uncertain-gaussian-process-code#gh-light-mode-only)
 
 # Gaussian Process Predictions with Uncertain Inputs Enabled by Uncertainty-Tracking Microprocessors
 This repository contains the code for the [Gaussian Process Predictions with Uncertain Inputs Enabled by Uncertainty-Tracking Microprocessors](https://openreview.net/forum?id=zKt7uVOttG) that was presented at the
