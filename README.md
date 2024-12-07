@@ -9,6 +9,13 @@ The key contribution of the paper is a simple algorithm that can compute the Gau
 
 We compare our algorithm to Monte Carlo simulations. We vary the number of Monte Carlo iterations that are carried and the size of the representation of the uncertainty-tracking microprocessor to measure the trade-off between the run time and the accuracy (as measured by the Wasserstein distance [^3] to the ground-truth output distribution).
 
+The Pareto plot below shows the [paper's](https://openreview.net/forum?id=zKt7uVOttG) key results comparing the mean run time against the mean Wasserstein distance (±1 std. dev.). Algorithm 1 refers to our method implemented on the uncertainty-tracking microprocessor as implemented on [Signaloid](signaloid.io) and MC stands for Monte Carlo simulation implemented on a traditional computer. See [Section 5 of the paper](https://openreview.net/forum?id=zKt7uVOttG) for more details on the method. We see that our method is almost always on the Pareto frontier.
+<p align="center">
+  <img width="600" alt="image" src="https://github.com/user-attachments/assets/5c8840c2-8d3f-4b55-be6c-74a148555196">
+</p>
+
+
+
 This repository contains the code for the implementation that was run on the [Signaloid](signaloid.io) platform in [`src/main.c`](src/main.c) and the implementation of the Monte Carlo experiments in [`src/native.c`](src/native.c). See [the Section below](#run-on-signaloid) to see how to run each case.
 
 For the best overall configuration of the [Signaloid](signaloid.io) uncertainty-tracking microprocessor, we find that the closest-in-terms-of-accuracy Monte Carlo simulation takes approximately 108.80x longer.
