@@ -85,6 +85,13 @@ local-gp-<number of Monte Carlo iterations>-<experiment iteration> <unique id> <
 
 The Monte Carlo samples can be found in `data/<unique id>.out`.
 
+You can make the following adjustments to `run-bm` by changing the appropriate make variable in the [`Makefile`](Makefile). Below we also show the default values they are set to.
+```
+SLEEP_FOR=0             <- interval in between runs.
+N=1                     <- number of repetition of each Monte Carlo number of samples configuration.
+N_SAMPLES := 4 16 32    <- a list of numbers corresponding to the number of samples of the Monte Carlo simulations.
+```
+
 ## Citing this work
 Please cite this work using the following Bibtex entry:
 
