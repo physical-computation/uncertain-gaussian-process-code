@@ -32,6 +32,10 @@ The output of this code should have the following format:
 <output distribution> <run time in microseconds>
 ```
 
+> [!NOTE]
+> For the most accurate results, make sure to use the Jupiter microarchitecture on Signaloid.
+
+
 Larger experimental suites, such as running repeated experiments using multiple different representation sizes can be done via the [Signaloid Cloud Compute Engine API](https://docs.signaloid.io/docs/api/). Additional tools and instructions on how to do so for this repository will be added in the future.
 
 ### Run on Traditional Hardware
