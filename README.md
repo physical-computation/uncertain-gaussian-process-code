@@ -102,7 +102,7 @@ Please cite this work using the following Bibtex entry:
 ```
 @inproceedings{
 petangoda2024gaussian,
-title={Gaussian Process Predictions with Uncertain Inputs Enabled by Uncertainty-Tracking Microprocessors},
+title={Gaussian Process Predictions with Uncertain Inputs Enabled by Uncertainty-Tracking Processor Architectures},
 author={Janith Petangoda and Chatura Samarakoon and Phillip Stanley-Marbell},
 booktitle={NeurIPS 2024 Workshop Machine Learning with new Compute Paradigms},
 year={2024},
